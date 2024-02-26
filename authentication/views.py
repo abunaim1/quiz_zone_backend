@@ -53,7 +53,7 @@ class RegistrationApiView(APIView):
             user = serializer.save() 
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
-            confirm_link = f'http://127.0.0.1:8000/authentication/activate/{uid}/{token}'
+            confirm_link = f'https://quiz-zone-backend.onrender.com/authentication/activate/{uid}/{token}'
             email_subject = 'Confirm Your Mail'
             email_body = render_to_string('confirm_mail.html', {'confirm_link' : confirm_link})
             email = EmailMultiAlternatives(email_subject, '', to=[user.email])
@@ -67,6 +67,7 @@ def activate(request, uid64, token):
     try:
         uid = urlsafe_base64_decode(uid64).decode()
         user = User._default_manager.get(pk=uid)
+
     except(User.DoesNotExist):
         user = None
 
