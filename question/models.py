@@ -27,7 +27,7 @@ class QuestionPaper(models.Model):
 class Question(models.Model):
     name = models.CharField(max_length=100)
     mark = models.IntegerField()
-    question_paper = models.ForeignKey(QuestionPaper, on_delete=models.CASCADE, null=True, blank=True)
+    question_paper = models.ManyToManyField(QuestionPaper)
 
 class AnswerOption(models.Model):
     question = models.ForeignKey(Question,on_delete=models.CASCADE, null=True, blank=True)
