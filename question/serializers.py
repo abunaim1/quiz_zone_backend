@@ -2,7 +2,7 @@ from . models import Question, QuestionCategory, AnswerOption, QuestionPaper
 from rest_framework import serializers
 
 class QuestionSerializer(serializers.ModelSerializer):
-    question_paper = serializers.StringRelatedField(many=True)
+    question_paper = serializers.StringRelatedField()
     class Meta:
         model = Question
         fields = '__all__'
