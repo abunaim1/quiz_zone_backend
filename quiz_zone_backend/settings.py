@@ -31,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = ['https://quiz-zone-backend.onrender.com']
+
 CORS_ALLOW_ALL_ORIGINS = True  # Allow requests from any origin
 # specify specific origins:
 # CSRF_TRUSTED_ORIGINS = ['https://quiz-zone-backend.onrender.com', 'https://127.0.0.1']
