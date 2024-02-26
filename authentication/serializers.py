@@ -18,7 +18,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     def save(self):
         image = self.validated_data.get('image')
-        file_path = os.path.join('authentication/images', image.name)
+        file_path = os.path.join('authentication/images/', image.name)
         with open(file_path, 'wb') as f:
                 for chunk in image.chunks():
                     f.write(chunk)
