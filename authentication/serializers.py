@@ -31,12 +31,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError({'error' : 'This email already exist!'})
         
-        account = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password1)
-
         image = self.validated_data.get('image')
         if image:
             file_name = default_storage.save(image.name, ContentFile(image.read()))
             account.image = file_name
+
+        account = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password1)
 
         account.is_active = False
         account.save()
