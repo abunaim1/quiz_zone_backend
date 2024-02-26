@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, pagination
 from . import models, serializers
+from urllib.parse import urlparse
 # Create your views here.
 
 
@@ -17,10 +18,11 @@ class QuestionPagination(pagination.PageNumberPagination):
     page_size_query_param = page_size
     max_page_size = 100
 
+
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = models.Question.objects.all()
     serializer_class = serializers.QuestionSerializer
-    pagination_class = QuestionPagination
+    pagination_class =  QuestionPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
