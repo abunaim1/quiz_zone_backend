@@ -29,8 +29,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
         image = validated_data.pop('image', None)
         user = User.objects.create_user(**validated_data)
         if image:
+            image = default_storage.save(image.name, ContentFile(image.read()))
             user.image = image
-            user.save()
+        user.is_active = False
+        user.save()
         return user
     
     # def save(self):
