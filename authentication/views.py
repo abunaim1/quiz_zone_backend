@@ -50,7 +50,7 @@ class RegistrationApiView(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
+            user = serializer.save() 
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             confirm_link = f'http://127.0.0.1:8000/authentication/activate/{uid}/{token}'

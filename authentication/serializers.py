@@ -17,30 +17,46 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'image']
 
-    def save(self):
-        username = self.validated_data['username']
-        first_name = self.validated_data['first_name']
-        last_name = self.validated_data['last_name']
-        email = self.validated_data['email']
-        password1 = self.validated_data['password']
-        password2 = self.validated_data['confirm_password']
+    def validate(self, data):
+        password = data.get('password')
+        confirm_password = data.pop('confirm_password', None)
 
-        if password1 != password2:
-            raise serializers.ValidationError({'error' : 'Password does not matched'})
-        
-        if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError({'error' : 'This email already exist!'})
-        
-        image = self.validated_data.get('image')
+        if password != confirm_password:
+            raise serializers.ValidationError({'error': 'Password does not match'})
+        return data
+    
+    def create(self, validated_data):
+        image = validated_data.pop('image', None)
+        user = User.objects.create_user(**validated_data)
         if image:
-            file_name = default_storage.save(image.name, ContentFile(image.read()))
-            account.image = file_name
+            user.image = image
+            user.save()
+        return user
+    
+    # def save(self):
+    #     username = self.validated_data['username']
+    #     first_name = self.validated_data['first_name']
+    #     last_name = self.validated_data['last_name']
+    #     email = self.validated_data['email']
+    #     password1 = self.validated_data['password']
+    #     password2 = self.validated_data['confirm_password']
 
-        account = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password1)
+    #     if password1 != password2:
+    #         raise serializers.ValidationError({'error' : 'Password does not matched'})
+        
+    #     if User.objects.filter(email=email).exists():
+    #         raise serializers.ValidationError({'error' : 'This email already exist!'})
+        
+    #     image = self.validated_data.get('image')
+    #     if image:
+    #         file_name = default_storage.save(image.name, ContentFile(image.read()))
+    #         account.image = file_name
 
-        account.is_active = False
-        account.save()
-        return account
+    #     account = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password1)
+
+    #     account.is_active = False
+    #     account.save()
+    #     return account
     
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
