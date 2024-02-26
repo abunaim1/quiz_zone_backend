@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from . import models
 import os
-
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,25 +18,26 @@ class RegistrationSerializer(serializers.ModelSerializer):
         fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'image']
 
     def save(self):
-        image = self.validated_data.get('image')
-        file_path = os.path.join('authentication/images/', image.name)
-        with open(file_path, 'wb') as f:
-                for chunk in image.chunks():
-                    f.write(chunk)
         username = self.validated_data['username']
         first_name = self.validated_data['first_name']
         last_name = self.validated_data['last_name']
         email = self.validated_data['email']
         password1 = self.validated_data['password']
         password2 = self.validated_data['confirm_password']
+
         if password1 != password2:
             raise serializers.ValidationError({'error' : 'Password does not matched'})
+        
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError({'error' : 'This email already exist!'})
-        account = User(username=username, first_name=first_name, last_name=last_name, email=email)
-        account.set_password(password1)
+        
+        account = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password1)
+
+        image = self.validated_data.get('image')
         if image:
-            account.image = image
+            file_name = default_storage.save(image.name, ContentFile(image.read()))
+            account.image = file_name
+
         account.is_active = False
         account.save()
         return account
