@@ -102,4 +102,3 @@ class LogoutApiView(APIView):
         return redirect('login')
 
     
-

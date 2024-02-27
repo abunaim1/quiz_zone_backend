@@ -1,9 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from . import models
-import os
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 
 class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,10 +9,10 @@ class ParticipantSerializer(serializers.ModelSerializer):
 
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required=True)
-    image = serializers.ImageField(required=False)
+
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'image']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password']
 
     def save(self):
         username = self.validated_data['username']
@@ -34,11 +31,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
         account = User(username = username, email=email, first_name=first_name, last_name=last_name)
         account.set_password(password1)
         account.is_active = False
-
-        image = self.validated_data.get('image')
-        if image:
-            file_name = default_storage.save(image.name, ContentFile(image.read()))
-            account.image = file_name
 
         account.save()
         return account
