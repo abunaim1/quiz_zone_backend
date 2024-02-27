@@ -27,7 +27,7 @@ class QuestionPaperSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ScriptSubmissionSeriaLizer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(many=True)
     class Meta:
         model = ScriptSubmission
         fields = '__all__'
