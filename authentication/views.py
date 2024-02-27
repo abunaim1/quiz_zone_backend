@@ -45,6 +45,10 @@ class ParticipantViewSet(viewsets.ModelViewSet):
         email.attach_alternative(email_body, "text/html")
         email.send()
 
+class UserImageViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.UserImageSerializer
+    queryset = models.UserImage.objects.all()
+
 class RegistrationApiView(APIView):
     serializer_class = serializers.RegistrationSerializer
     def post(self, request):

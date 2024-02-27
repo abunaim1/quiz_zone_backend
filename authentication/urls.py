@@ -4,6 +4,7 @@ from . import views
 
 router = DefaultRouter()
 router.register('participant', views.ParticipantViewSet)
+router.register('image', views.UserImageViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
