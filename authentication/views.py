@@ -14,11 +14,23 @@ from django.shortcuts import redirect
 from rest_framework import viewsets
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.contrib.auth.models import User
 # Create your views here.
 
 class ParticipantViewSet(viewsets.ModelViewSet):
     queryset = models.Participant.objects.all()
     serializer_class = serializers.ParticipantSerializer
+
+    def get_queryset(self):
+        user_id = self.request.query_params.get('user_id')
+        if user_id:
+            queryset = self.queryset.filter(user_id=user_id)
+            return queryset
+        return super().get_queryset()
+    
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
 
     def get_queryset(self):
         user_id = self.request.query_params.get('user_id')
