@@ -35,7 +35,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user_id = self.request.query_params.get('user_id')
         if user_id:
-            queryset = self.queryset.filter(user_id=user_id)
+            queryset = self.queryset.filter(id=user_id)
             return queryset
         return super().get_queryset()
 
