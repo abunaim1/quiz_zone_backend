@@ -39,5 +39,5 @@ class AnswerOption(models.Model):
         return self.answer_text
     
 class ScriptSubmission(models.Model):
-    user = models.ManyToManyField(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     mark = models.IntegerField()

@@ -1,6 +1,5 @@
 from . models import Question, QuestionCategory, AnswerOption, QuestionPaper, ScriptSubmission
 from rest_framework import serializers 
-from authentication.serializers import UserSerializer
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -27,7 +26,6 @@ class QuestionPaperSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ScriptSubmissionSeriaLizer(serializers.ModelSerializer):
-    user = UserSerializer(many=True)
     class Meta:
         model = ScriptSubmission
         fields = '__all__'
