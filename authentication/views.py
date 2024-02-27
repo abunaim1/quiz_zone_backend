@@ -8,7 +8,6 @@ from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.models import Token
-from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from rest_framework import viewsets

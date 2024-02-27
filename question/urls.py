@@ -7,6 +7,7 @@ router.register('list', views.QuestionViewSet)
 router.register('category', views.QuestionCategoryViewSet)
 router.register('question_paper', views.QuestionPaperViewSet)
 router.register('answer_option', views.AnswerOptionViewset)
+router.register('scriptSubmission', views.ScriptSubmissionViewSet)
 urlpatterns = [
     path('', include(router.urls))
 ]
