@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 from rest_framework.response import Response
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -57,6 +58,9 @@ class ScriptSubmissionViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
+            user_data = serializer.validated_data.pop('user')  # Extract user data
+            user = User.objects.create(**user_data)  # Create user object
+            serializer.validated_data['user'] = user
             data = serializer.save()
             print(data.user.email)
             email_subject = 'You Script Marks'
@@ -67,18 +71,3 @@ class ScriptSubmissionViewSet(viewsets.ModelViewSet):
             return Response("Check Your Mail To Know Your Marks")
         return Response(serializer.data)
 
-
-# serializer_class = serializers.RegistrationSerializer
-# def post(self, request):
-#     serializer = self.serializer_class(data=request.data)
-#     if serializer.is_valid():
-#         user = serializer.save() 
-#         token = default_token_generator.make_token(user)
-#         uid = urlsafe_base64_encode(force_bytes(user.pk))
-#         confirm_link = f'https://quiz-zone-backend.onrender.com/authentication/activate/{uid}/{token}'
-#         email_subject = 'Confirm Your Mail'
-#         email_body = render_to_string('confirm_mail.html', {'confirm_link' : confirm_link})
-#         email = EmailMultiAlternatives(email_subject, '', to=[user.email])
-#         email.attach_alternative(email_body, "text/html")
-#         email.send()
-#         return Response("Check your mail for confirmation")

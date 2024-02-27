@@ -1,7 +1,6 @@
 from . models import Question, QuestionCategory, AnswerOption, QuestionPaper, ScriptSubmission
 from rest_framework import serializers 
 from authentication.serializers import UserSerializer
-from django.contrib.auth.models import User
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -28,7 +27,9 @@ class QuestionPaperSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ScriptSubmissionSeriaLizer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = UserSerializer()
     class Meta:
         model = ScriptSubmission
         fields = '__all__'
+
+    
