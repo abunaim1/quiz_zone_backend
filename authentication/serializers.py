@@ -7,7 +7,13 @@ class UserImageSerializer(serializers.ModelSerializer):
         model = models.UserImage
         fields = '__all__'
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'email')
+
 class ParticipantSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = models.Participant
         fields = '__all__'

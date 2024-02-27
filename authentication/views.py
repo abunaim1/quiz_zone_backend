@@ -27,24 +27,6 @@ class ParticipantViewSet(viewsets.ModelViewSet):
             return queryset
         return super().get_queryset()
 
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        self.send_quiz_result_email(instance)
-
-    def send_quiz_result_email(self, participant_instance):
-        mark = 0
-        for question in participant_instance.quiz.question.all():
-            for op in question.answer_option.all():
-                if op.is_correct:
-                    mark += question.mark
-        mark = 0
-
-        email_subject = "Your Quiz Result"
-        email_body = render_to_string('quiz.html', {'user' : participant_instance.user, 'mark': mark, 'quiz': participant_instance.quiz})
-        email = EmailMultiAlternatives(email_subject , '', to=[participant_instance.user.email])
-        email.attach_alternative(email_body, "text/html")
-        email.send()
-
 class UserImageViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserImageSerializer
     queryset = models.UserImage.objects.all()

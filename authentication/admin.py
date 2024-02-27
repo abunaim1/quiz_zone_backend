@@ -16,3 +16,4 @@ class ParticipantAdmin(admin.ModelAdmin):
 
     
 admin.site.register(models.Participant, ParticipantAdmin)
+admin.site.register(models.UserImage)
