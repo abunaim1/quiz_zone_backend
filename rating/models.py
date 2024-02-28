@@ -13,7 +13,6 @@ RATING = [
 
 class Rating (models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    question = models.ForeignKey(QuestionPaper, on_delete=models.CASCADE, null=True, blank=True)
     rate = models.CharField(max_length = 50, choices=RATING)
     feedback = models.TextField()
 
