@@ -5,7 +5,6 @@ from urllib.parse import urlparse
 from rest_framework.response import Response
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -58,9 +57,6 @@ class ScriptSubmissionViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            user_data = serializer.validated_data.pop('user')  # Extract user data
-            user = User.objects.create(**user_data)  # Create user object
-            serializer.validated_data['user'] = user
             data = serializer.save()
             print(data.user.email)
             email_subject = 'You Script Marks'
