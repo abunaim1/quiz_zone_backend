@@ -39,5 +39,5 @@ class AnswerOption(models.Model):
         return self.answer_text
     
 class ScriptSubmission(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     mark = models.IntegerField()
