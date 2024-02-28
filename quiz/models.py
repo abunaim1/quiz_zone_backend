@@ -15,4 +15,4 @@ class QuizCategory(models.Model):
 class Quiz(models.Model):
     quiz_category = models.ManyToManyField(QuizCategory)
     question_paper = models.ManyToManyField(QuestionPaper)
-
+    quiz_description = models.CharField(max_length=100, null=True, blank=True)
