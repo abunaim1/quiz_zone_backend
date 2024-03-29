@@ -23,4 +23,3 @@ class QuizViewSet(viewsets.ModelViewSet):
                         queryset = queryset.filter(quiz_category=category_slug)
         return queryset
         
-    

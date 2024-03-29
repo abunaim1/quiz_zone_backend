@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    question_paper = serializers.StringRelatedField()
+    question_paper_name = serializers.CharField(source='question_paper.name', read_only=True)
     class Meta:
         model = Question
         fields = '__all__'
@@ -20,7 +20,7 @@ class AnswerOptionSerializer(serializers.ModelSerializer):
         fields = '__all__'
             
 class QuestionPaperSerializer(serializers.ModelSerializer):
-    question_category = serializers.StringRelatedField()
+    question_category_name = serializers.CharField(source='question_category.name', read_only=True)
     class Meta:
         model = QuestionPaper
         fields = '__all__'
