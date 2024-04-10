@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'question',
     'quiz',
     'rating',
+    'course',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',

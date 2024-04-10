@@ -10,6 +10,7 @@ urlpatterns = [
     path('question/', include('question.urls')),
     path('quiz/', include('quiz.urls')),
     path('rating/', include('rating.urls')),
+    path('course/', include('course.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
