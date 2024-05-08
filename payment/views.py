@@ -6,8 +6,12 @@ from . import models
 from . import serializers
 from rest_framework.response import Response
 from sslcommerz_lib import SSLCOMMERZ 
+from django.http import JsonResponse
 import uuid
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
+@method_decorator(csrf_exempt, name='dispatch')
 class CheckViewset(viewsets.ModelViewSet):
     queryset = models.CheckOut.objects.all()
     serializer_class = serializers.PaymentSerializers
@@ -57,13 +61,11 @@ class CheckViewset(viewsets.ModelViewSet):
         # print(response)
 
         # return Response({"user_id": user_id, "course_id":course_id, "price": price,})
-        return redirect(response['GatewayPageURL'])
+        return JsonResponse({"GatewayPageURL": response['GatewayPageURL']})
     
     def perform_create(self, serializer):
         serializer.save()
-
-
-
+    
 def payment(request):
     pass
     # Need to redirect user to response['GatewayPageURL']
