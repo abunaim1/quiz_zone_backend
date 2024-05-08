@@ -36,7 +36,7 @@ class CheckViewset(viewsets.ModelViewSet):
         post_body['total_amount'] = price
         post_body['currency'] = "BDT"
         post_body['tran_id'] = uuid.uuid4()
-        post_body['success_url'] = 'https://quizzonebyabunaim.netlify.app/'
+        # post_body['success_url'] = 'https://quizzonebyabunaim.netlify.app/'
         post_body['fail_url'] = "your fail url"
         post_body['cancel_url'] = "your cancel url"
         post_body['emi_option'] = 0
@@ -56,8 +56,8 @@ class CheckViewset(viewsets.ModelViewSet):
         response = sslcz.createSession(post_body) # API response
         # print(response)
 
-        # return Response({"user_id": user_id, "course_id":course_id, "price": price,})
-        return redirect(response['GatewayPageURL'])
+        return Response({"user_id": user_id, "course_id":course_id, "price": price,})
+        # return redirect(response['GatewayPageURL'])
     
     def perform_create(self, serializer):
         serializer.save()

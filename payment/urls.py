@@ -4,9 +4,9 @@ from django.urls import path,include
 
 
 router = DefaultRouter()
-router.register('pay', views.CheckViewset)
+router.register('pay/', views.CheckViewset)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('payment/', views.payment, name='payment')
+    # path('payment/', views.payment, name='payment')
 ]
