@@ -31,3 +31,4 @@ setuptools
 sqlparse
 typing_extensions
 wheel
+sslcommerz_lib
