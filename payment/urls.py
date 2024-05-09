@@ -8,5 +8,4 @@ router.register('pay', views.CheckViewset)
 
 urlpatterns = [
     path('', include(router.urls)),
-    # path('payment/', views.payment, name='payment')
 ]

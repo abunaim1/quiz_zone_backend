@@ -10,6 +10,7 @@ from django.http import JsonResponse
 import uuid
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.urls import reverse
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CheckViewset(viewsets.ModelViewSet):
@@ -40,13 +41,13 @@ class CheckViewset(viewsets.ModelViewSet):
         post_body['total_amount'] = price
         post_body['currency'] = "BDT"
         post_body['tran_id'] = uuid.uuid4()
-        post_body['success_url'] = 'https://quizzonebyabunaim.netlify.app/'
+        post_body['success_url'] = f'https://quizzonebyabunaim.netlify.app/'
         post_body['fail_url'] = "your fail url"
-        post_body['cancel_url'] = "your cancel url"
+        post_body['cancel_url'] = f'https://quizzonebyabunaim.netlify.app/'
         post_body['emi_option'] = 0
         post_body['cus_name'] = 'name'
         post_body['cus_email'] = user.email
-        post_body['cus_phone'] = "01741501656"
+        post_body['cus_phone'] = "01572918748"
         post_body['cus_add1'] = "Gulistan"
         post_body['cus_city'] = "Dhaka"
         post_body['cus_country'] = "Bangladesh"
@@ -66,6 +67,3 @@ class CheckViewset(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
     
-def payment(request):
-    pass
-    # Need to redirect user to response['GatewayPageURL']
